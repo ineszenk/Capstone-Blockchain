@@ -43,7 +43,10 @@ class App extends Component {
       console.log(error);
     }
   };
+
   onSubmit = async event => {
+    // storehash.options.address =
+    //   "0x059105c50081b77e31a1c19e1223365698e2cb915ec2f35992388600b8d609fe";
     event.preventDefault();
     //bring in user's metamask account address
     const accounts = await web3.eth.getAccounts();
@@ -58,6 +61,7 @@ class App extends Component {
       this.setState({ ipfsHash: ipfsHash[0].hash });
       // call Ethereum contract method "sendHash" and .send IPFS hash to etheruem contract
       //return the transaction hash from the ethereum contract
+
       storehash.methods.setHash(this.state.ipfsHash).send(
         {
           from: accounts[0]

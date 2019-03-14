@@ -1,8 +1,6 @@
 import web3 from "./web3";
 //Your contract address
-const address =
-  "0x62ed27e9438f8cffae5d440d224ee5c9ce4900e09ed356f7b29e0bd626d6ea81";
-//Your contract ABI
+const address = "0x17355bd6ee4a523a7693a9ffd3401e0b1b0713f0";
 const abi = [
   {
     constant: false,
