@@ -3,6 +3,8 @@ import web3 from "./web3";
 import ipfs from "./ipfs";
 import storehash from "./storehash";
 import { Button } from "reactstrap";
+import axios from 'axios';
+
 class App extends Component {
   state = {
     ipfsHash: null,
@@ -43,7 +45,6 @@ class App extends Component {
       console.log(error);
     }
   };
-
   onSubmit = async event => {
     // storehash.options.address =
     //   "0x059105c50081b77e31a1c19e1223365698e2cb915ec2f35992388600b8d609fe";
@@ -67,10 +68,19 @@ class App extends Component {
           from: accounts[0]
         },
         (error, transactionHash) => {
-          console.log(transactionHash);
+          if (error) {
+            console.log('Failed send', transactionHash, error);
+          } else if (transactionHash) {
+            console.log('Successful send', transactionHash, error);
+          }
           this.setState({ transactionHash });
         }
       );
+      axios.post(`http://localhost:8080/api/songs/`, ipfsHash)
+      .then(res => {
+        console.log('axios res', res);
+        console.log('axios res.data', res.data);
+      })
     });
   };
   render() {
@@ -80,7 +90,7 @@ class App extends Component {
           <h1>Ethereum and IPFS using Infura</h1>
         </header>
         <hr />
-        <grid>
+        <div>
           <h3> Choose file to send to IPFS </h3>
           <form onSubmit={this.onSubmit}>
             <input type="file" onChange={this.captureFile} />
@@ -117,7 +127,7 @@ class App extends Component {
               </tr>
             </tbody>
           </table>
-        </grid>
+        </div>
       </div>
     );
   }
